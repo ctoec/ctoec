@@ -26,7 +26,20 @@
                 "reference": "master"
             }
         }
-    }
+      },
+      {
+        "type": "package",
+        "package": {
+            "name": "plugin/forms-list",
+            "version": "dev-master",
+            "type":"wordpress-plugin",
+            "source": {
+                "url": "https://github.com/matthewcrist/gutenberg-form-block.git",
+                "type": "git",
+                "reference": "master"
+            }
+        }
+      }
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -38,6 +51,7 @@
       "drupal-composer/preserve-paths": "0.1.*",
       "johnpbloch/wordpress-core": "~5.0",
       "johnpbloch/wordpress-core-installer": "^1.0",
+      "plugin/forms-list": "dev-master",
       "theme/ctoec": "dev-master",
       "wpackagist-plugin/all-in-one-redirection": "^2.1",
       "wpackagist-plugin/aryo-activity-log": "^2.5",

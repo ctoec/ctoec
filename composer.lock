@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48a5b1d22937737ece9026d46e2cdf44",
+    "content-hash": "5522ae06a3ee48327a0a199c6deb971c",
     "packages": [
         {
             "name": "composer/installers",
@@ -270,6 +270,17 @@
             "time": "2018-11-09T20:10:38+00:00"
         },
         {
+            "name": "plugin/forms-list",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthewcrist/gutenberg-form-block.git",
+                "reference": "master"
+            },
+            "type": "wordpress-plugin",
+            "time": "2019-02-07T16:07:53+00:00"
+        },
+        {
             "name": "theme/ctoec",
             "version": "dev-master",
             "source": {
@@ -278,7 +289,7 @@
                 "reference": "master"
             },
             "type": "wordpress-theme",
-            "time": "2019-02-06T17:57:37+00:00"
+            "time": "2019-02-11T01:24:14+00:00"
         },
         {
             "name": "wpackagist-plugin/all-in-one-redirection",
@@ -442,15 +453,15 @@
         },
         {
             "name": "wpackagist-plugin/wordpress-seo",
-            "version": "9.5",
+            "version": "9.6",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordpress-seo/",
-                "reference": "tags/9.5"
+                "reference": "tags/9.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.9.5.zip",
+                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.9.6.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -525,6 +536,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "plugin/forms-list": 20,
         "theme/ctoec": 20
     },
     "prefer-stable": true,
