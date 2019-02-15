@@ -20,6 +20,7 @@ jobs:
     steps:
       - checkout
 
+      - run: sudo apt install -y mysql-client
       - run: echo 127.0.0.1 dev-ctoec.dev | sudo tee -a /etc/hosts
 
       # Download and cache dependencies
@@ -35,10 +36,13 @@ jobs:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
 
-      - run: mysql -u ubuntu -e "create database wordpress"
+      - run:
+          name: Mysql database
+          command: mysql  -h 127.0.0.1 -u root -e "create database wordpress;"
+
       - run: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
       - run: chmod +x wp-cli.phar
-      - run: ./wp-cli.phar core config --allow-root --dbname=wordpress --dbuser=ubuntu --dbhost=localhost --path=wordpress
+      - run: ./wp-cli.phar core config --allow-root --dbname=wordpress --dbuser=root --dbhost=127.0.0.1 --path=wordpress
       
       # Install WordPress
       - run: ./wp-cli.phar core install --allow-root --admin_name=admin --admin_password=admin --admin_email=admin@example.com --url=dev-ctoec.dev:8080 --title=WordPress --path=wordpress
