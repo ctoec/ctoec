@@ -59,7 +59,7 @@ jobs:
 
       - run: 
           name: Installing WP
-          command: ./wp-cli.phar core install --allow-root --admin_name=admin --admin_password=admin --admin_email=admin@example.com --url=dev-ctoec.dev:8080 --title=WordPress --path=wordpress --debug
+          command: ./wp-cli.phar core install --allow-root --admin_name=admin --admin_password=admin --admin_email=admin@example.com --url=dev-ctoec.dev --title=WordPress --path=wordpress --debug
       
       - run: 
           name: Updating composer
