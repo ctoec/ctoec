@@ -34,10 +34,6 @@ jobs:
       - run: sudo apt install -y mysql-client
       - run: echo 127.0.0.1 dev-ctoec.dev | sudo tee -a /etc/hosts
 
-      - run:
-          name: Mysql database
-          command: mysql  -h 127.0.0.1 -u root -e "create database wordpress;"
-
       - run: 
           name: Install WP-CLI
           command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -45,6 +41,10 @@ jobs:
       - run: 
           name: Setting WP-CLI permissions
           command: chmod +x wp-cli.phar
+
+      - run:
+          name: Creating database
+          command: mysql  -h 127.0.0.1 -u root -e "create database wordpress;"
 
       - run:
           name: Downloading WP core
