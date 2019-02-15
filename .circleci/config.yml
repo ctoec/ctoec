@@ -18,11 +18,6 @@ jobs:
     working_directory: ~/dev-ctoec
 
     steps:
-      - checkout
-
-      - run: sudo apt install -y mysql-client
-      - run: echo 127.0.0.1 dev-ctoec.dev | sudo tee -a /etc/hosts
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -33,6 +28,10 @@ jobs:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
+
+      - checkout
+      - run: sudo apt install -y mysql-client
+      - run: echo 127.0.0.1 dev-ctoec.dev | sudo tee -a /etc/hosts
 
       - run:
           name: Mysql database
