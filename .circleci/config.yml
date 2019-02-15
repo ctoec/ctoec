@@ -64,8 +64,3 @@ jobs:
       - run:
           name: Installing WP themes and plugins via Composer
           command: composer install -n --prefer-dist
-
-      # Install WordPress
-      - run: sudo cp ~/dev-ctoec/apache-ci.conf /etc/apache2/sites-available
-      - run: sudo a2ensite apache-ci.conf
-      - run: sudo service apache2 restart
