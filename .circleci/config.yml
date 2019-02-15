@@ -1,0 +1,45 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/php:7.1.5-browsers
+
+    working_directory: ~/dev-ctoec
+
+    steps:
+      - checkout
+
+      - run: echo 127.0.0.1 dev-ctoec.dev | sudo tee -a /etc/hosts
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "composer.json" }}
+          - v1-dependencies-
+      - run: php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      - run: php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+      - run: php composer-setup.php
+      - run: php -r "unlink('composer-setup.php');"
+      - run: php composer.phar self-update
+      - run: sudo mv composer.phar /usr/local/bin/composer
+      - run: composer install -n --prefer-dist
+
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+
+      - run: mysql -u ubuntu -e "create database wordpress"
+      - run: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+      - run: chmod +x wp-cli.phar
+      - run: ./wp-cli.phar core config --allow-root --dbname=wordpress --dbuser=ubuntu --dbhost=localhost --path=wordpress
+      
+      # Install WordPress
+      - run: ./wp-cli.phar core install --allow-root --admin_name=admin --admin_password=admin --admin_email=admin@example.com --url=dev-ctoec.dev:8080 --title=WordPress --path=wordpress
+      - run: cp ~/dev-ctoec/apache-ci.conf /etc/apache2/sites-available
+      - run: a2ensite apache-ci.conf
+      - run: sudo service apache2 restart
+
+      # run tests!
+      - run: vendor/bin/phpunit
