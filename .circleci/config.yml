@@ -28,8 +28,6 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "composer.json" }}
           - v1-dependencies-
-      - run: sudo composer self-update
-      - run: composer install -n --prefer-dist
 
       - save_cache:
           paths:
@@ -40,12 +38,31 @@ jobs:
           name: Mysql database
           command: mysql  -h 127.0.0.1 -u root -e "create database wordpress;"
 
-      - run: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-      - run: chmod +x wp-cli.phar
-      - run: ./wp-cli.phar core config --allow-root --dbname=wordpress --dbuser=root --dbhost=127.0.0.1 --path=wordpress
+      - run: 
+          name: Install WP-CLI
+          command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
       
+      - run: 
+          name: Setting WP-CLI permissions
+          command: chmod +x wp-cli.phar
+
+      - run:
+          name: Downloading WP core
+          command: /wp-cli.phar core download --path=wordpress
+
+      - run: 
+          name: Installing WP
+          command: ./wp-cli.phar core install --allow-root --admin_name=admin --admin_password=admin --admin_email=admin@example.com --url=dev-ctoec.dev:8080 --title=WordPress --path=wordpress
+      
+      - run: 
+          name: Updating composer
+          command: sudo composer self-update
+
+      - run:
+          name: Installing WP themes and plugins via Composer
+          command: composer install -n --prefer-dist
+
       # Install WordPress
-      - run: ./wp-cli.phar core install --allow-root --admin_name=admin --admin_password=admin --admin_email=admin@example.com --url=dev-ctoec.dev:8080 --title=WordPress --path=wordpress
       - run: cp ~/dev-ctoec/apache-ci.conf /etc/apache2/sites-available
       - run: a2ensite apache-ci.conf
       - run: sudo service apache2 restart
