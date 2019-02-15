@@ -46,6 +46,10 @@ jobs:
           name: Downloading WP core
           command: ./wp-cli.phar core download --path=wordpress
 
+      - run:
+          name: Creating WP config file
+          command: ./wp-cli.phar core config --allow-root --dbname=wordpress --dbuser=root --dbhost=127.0.0.1 --path=wordpress
+
       - run: 
           name: Installing WP
           command: ./wp-cli.phar core install --allow-root --admin_name=admin --admin_password=admin --admin_email=admin@example.com --url=dev-ctoec.dev:8080 --title=WordPress --path=wordpress
