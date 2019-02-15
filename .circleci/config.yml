@@ -66,9 +66,6 @@ jobs:
           command: composer install -n --prefer-dist
 
       # Install WordPress
-      - run: cp ~/dev-ctoec/apache-ci.conf /etc/apache2/sites-available
-      - run: a2ensite apache-ci.conf
+      - run: sudo cp ~/dev-ctoec/apache-ci.conf /etc/apache2/sites-available
+      - run: sudo a2ensite apache-ci.conf
       - run: sudo service apache2 restart
-
-      # run tests!
-      - run: vendor/bin/phpunit
