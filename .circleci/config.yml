@@ -34,7 +34,13 @@ jobs:
           name: Wait for db
           command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
 
-      - run: sudo apt install -y mysql-client
+      - run: 
+          name: Update dependencies
+          command: |
+            sudo apt-get update -q
+            sudo apt install -y mysql-client
+            sudo apt-get install -y lftp
+
       - run: echo 127.0.0.1 dev-ctoec.dev | sudo tee -a /etc/hosts
 
       - run: 
@@ -64,3 +70,7 @@ jobs:
       - run:
           name: Installing WP themes and plugins via Composer
           command: composer install -n --prefer-dist
+
+      - run:
+          name: Deploy theme
+          command: sftp://${SFTP_USERNAME}:${SFTP_PASSWORD}@${SFTP_HOSTNAME} -e 'mirror -v -R ./${THEME_NAME} ./wp-content/themes/${THEME_NAME}; quit'
