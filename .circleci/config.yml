@@ -88,18 +88,18 @@ jobs:
           paths:
             - ~/dev-ctoec
 
-      publish-prod:
-        docker:
-          - image: circleci/php:7.1-node-browsers
-          - image: circleci/mariadb:10.3.4-ram
-            environment:
-              MARIADB_USER: root
-              MARIADB_DB: wordpress
-        steps:
-          - attach_workspace:
-              at: .
-          - run:
-              name: Publish to Prod
-              command: |
-                lftp sftp://${SFTP_USERNAME}:${SFTP_PASSWORD}@${SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"
+  publish-prod:
+    docker:
+      - image: circleci/php:7.1-node-browsers
+      - image: circleci/mariadb:10.3.4-ram
+        environment:
+          MARIADB_USER: root
+          MARIADB_DB: wordpress
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Publish to Prod
+          command: |
+            lftp sftp://${SFTP_USERNAME}:${SFTP_PASSWORD}@${SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"
           
