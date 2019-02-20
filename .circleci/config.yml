@@ -84,7 +84,9 @@ jobs:
           command: composer install -n --prefer-dist
 
       - persist_to_workspace:
-          root: ~/dev-ctoec
+          root: .
+          paths:
+            - wordpress
 
   publish-prod:
     docker:
