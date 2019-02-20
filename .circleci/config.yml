@@ -88,7 +88,7 @@ jobs:
           paths:
             - wordpress
 
-  publish-prod:
+  deploy-prod:
     docker:
       - image: circleci/php:7.1-node-browsers
       - image: circleci/mariadb:10.3.4-ram
