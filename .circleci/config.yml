@@ -8,7 +8,7 @@ workflows:
             - build #alternately this could depend on deploy-dev to have a linear flow instead of split
           filters:
             branches:
-              only: master
+              only: prod
 
 version: 2
 jobs:
