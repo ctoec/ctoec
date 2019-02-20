@@ -86,7 +86,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - ~/dev-ctoec
+            - dev-ctoec
 
   publish-prod:
     docker:
