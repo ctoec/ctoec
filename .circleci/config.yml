@@ -104,5 +104,5 @@ jobs:
       - run:
           name: Publish to Prod
           command: |
-            lftp sftp://${SFTP_USERNAME}:${SFTP_PASSWORD}@${SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"
+            lftp sftp://${SFTP_USERNAME}:${SFTP_PASSWORD}@${SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ --exclude .git/ --exclude .gitignore -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"
           
