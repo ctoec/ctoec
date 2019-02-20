@@ -72,11 +72,10 @@ jobs:
           command: composer install -n --prefer-dist
 
   deploy: 
-    docker:
-      steps:
-        - run:
-            name: Deploy theme
-            command: 'lftp sftp://${SFTP_USERNAME}:${SFTP_PASSWORD}@${SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"'
+    steps:
+      - run:
+          name: Deploy theme
+          command: 'lftp sftp://${SFTP_USERNAME}:${SFTP_PASSWORD}@${SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"'
 
 workflows:
   version: 2
