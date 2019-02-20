@@ -1,14 +1,14 @@
 workflows:
   version: 2
   main:
-jobs:
-  - build
-  - deploy-prod:
-      requires:
-        - build #alternately this could depend on deploy-dev to have a linear flow instead of split
-      filters:
-        branches:
-          only: master
+    jobs:
+      - build
+      - deploy-prod:
+          requires:
+            - build #alternately this could depend on deploy-dev to have a linear flow instead of split
+          filters:
+            branches:
+              only: master
 
 version: 2
 jobs:
