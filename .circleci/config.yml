@@ -51,7 +51,6 @@ jobs:
           command: |
             sudo apt-get update -q
             sudo apt install -y mysql-client
-            sudo apt-get install -y lftp
 
       - run: echo 127.0.0.1 dev-ctoec.dev | sudo tee -a /etc/hosts
 
@@ -98,6 +97,10 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - run: 
+          name: Update dependencies
+          command: |
+            sudo apt-get install -y lftp
       - run:
           name: Publish to Prod
           command: |
