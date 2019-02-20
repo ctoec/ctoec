@@ -1,3 +1,15 @@
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build
+      - deploy-prod:
+          requires:
+            - build #alternately this could depend on deploy-dev to have a linear flow instead of split
+          filters:
+            branches:
+              only: prod
+
 version: 2
 jobs:
   build:
@@ -71,6 +83,23 @@ jobs:
           name: Installing WP themes and plugins via Composer
           command: composer install -n --prefer-dist
 
+      - persist_to_workspace:
+          root: .
+          paths:
+            - wordpress
+
+  publish-prod:
+    docker:
+      - image: circleci/php:7.1-node-browsers
+      - image: circleci/mariadb:10.3.4-ram
+        environment:
+          MARIADB_USER: root
+          MARIADB_DB: wordpress
+    steps:
+      - attach_workspace:
+          at: .
       - run:
-          name: Deploy theme
-          command: 'lftp sftp://${SFTP_USERNAME}:${SFTP_PASSWORD}@${SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"'
+          name: Publish to Prod
+          command: |
+            lftp sftp://${SFTP_USERNAME}:${SFTP_PASSWORD}@${SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"
+          
