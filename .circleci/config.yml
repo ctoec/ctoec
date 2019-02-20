@@ -84,7 +84,7 @@ jobs:
           command: composer install -n --prefer-dist
 
       - persist_to_workspace:
-          root: .
+          root: ~/dev-ctoec
 
   publish-prod:
     docker:
