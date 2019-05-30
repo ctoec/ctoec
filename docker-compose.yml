@@ -1,64 +1,39 @@
 version: '3'
 services:
-  memcached:
-    image: 'memcached:latest'
   nginx:
     image: 'nginx:latest'
-    expose:
-      - '80'
-      - '443'
+    ports:
+      - 8080:80
+      - 4444:443
     volumes:
       - './wordpress:/var/www/html'
       - './config/nginx/default.conf:/etc/nginx/conf.d/default.conf'
     depends_on:
       - phpfpm
-      - memcacheadmin
-    networks:
-      - default
-      - wplocaldocker
     environment:
       CERT_NAME: localhost
       HTTPS_METHOD: noredirect
       VIRTUAL_HOST: 'ctoec.test,*.ctoec.test'
-  memcacheadmin:
-    image: hitwe/phpmemcachedadmin
-    expose:
-      - '80'
-    depends_on:
-      - memcached
   phpfpm:
-    image: '10up/phpfpm:7.3'
+    build: .
     volumes:
       - './wordpress:/var/www/html'
       - './config/php-fpm/php.ini:/usr/local/etc/php/php.ini'
       - './config/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini'
       - 'wplocaldockerCache:/var/www/.wp-cli/cache'
-      - '~/.ssh:/root/.ssh'
       - './config/php-fpm/wp-cli.local.yml:/var/www/.wp-cli/config.yml'
+      - './backup:/tmp/backup'
     depends_on:
-      - memcached
-      - elasticsearch
-    networks:
-      - default
-      - wplocaldocker
-    dns:
-      - 10.0.0.2
-  elasticsearch:
-    image: 'docker.elastic.co/elasticsearch/elasticsearch:5.6.5'
-    expose:
-      - '9200'
+      - mysql
+  mysql:
+    image: mysql:5
     volumes:
-      - './config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml'
-      - './config/elasticsearch/plugins:/usr/share/elasticsearch/plugins'
-      - 'elasticsearchData:/usr/share/elasticsearch/data:delegated'
+      - "mysqlData:/var/lib/mysql"
+    ports:
+      - "3306:3306"
     environment:
-      ES_JAVA_OPTS: '-Xms750m -Xmx750m'
-networks:
-  wplocaldocker:
-    external:
-      name: wplocaldocker
+      MYSQL_ROOT_PASSWORD: password
 volumes:
-  wplocaldockerCache:
-    external:
-      name: wplocaldockerCache
+  mysqlData: {}
+  wplocaldockerCache: {}
   elasticsearchData: {}
