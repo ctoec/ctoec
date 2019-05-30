@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5522ae06a3ee48327a0a199c6deb971c",
+    "content-hash": "bc4b51f7a86169e118f36441367cc1ef",
     "packages": [
         {
             "name": "composer/installers",
@@ -128,16 +128,16 @@
         },
         {
             "name": "drupal-composer/preserve-paths",
-            "version": "0.1.4",
+            "version": "0.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal-composer/preserve-paths.git",
-                "reference": "d557250928235fe23e11c86329bd7cef05397648"
+                "reference": "7f99622800504c058e5230b63d3cd25809fa23ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal-composer/preserve-paths/zipball/d557250928235fe23e11c86329bd7cef05397648",
-                "reference": "d557250928235fe23e11c86329bd7cef05397648",
+                "url": "https://api.github.com/repos/drupal-composer/preserve-paths/zipball/7f99622800504c058e5230b63d3cd25809fa23ba",
+                "reference": "7f99622800504c058e5230b63d3cd25809fa23ba",
                 "shasum": ""
             },
             "require": {
@@ -152,11 +152,11 @@
             },
             "type": "composer-plugin",
             "extra": {
-                "class": "derhasi\\Composer\\Plugin"
+                "class": "DrupalComposer\\PreservePaths\\Plugin"
             },
             "autoload": {
                 "psr-4": {
-                    "derhasi\\Composer\\": "src/"
+                    "DrupalComposer\\PreservePaths\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -171,34 +171,34 @@
                 }
             ],
             "description": "Composer plugin for preserving custom paths and supporting nested packages",
-            "homepage": "https://github.com/derhasi/composer-preserve-paths",
+            "homepage": "https://github.com/drupal-composer/preserve-paths",
             "keywords": [
                 "composer-plugin",
                 "custom path",
                 "installer",
                 "nested package"
             ],
-            "time": "2017-02-03T11:32:31+00:00"
+            "time": "2017-07-20T14:32:18+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core",
-            "version": "5.0.3",
+            "version": "5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "76c8acab20262adc0eb70d20aace3d36c2f3a16f"
+                "reference": "7555561027211f295e1d6a77d06ab47f605608cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/76c8acab20262adc0eb70d20aace3d36c2f3a16f",
-                "reference": "76c8acab20262adc0eb70d20aace3d36c2f3a16f",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/7555561027211f295e1d6a77d06ab47f605608cd",
+                "reference": "7555561027211f295e1d6a77d06ab47f605608cd",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
             "provide": {
-                "wordpress/core-implementation": "5.0.3"
+                "wordpress/core-implementation": "5.2.1"
             },
             "type": "wordpress-core",
             "notification-url": "https://packagist.org/downloads/",
@@ -211,14 +211,14 @@
                     "homepage": "http://wordpress.org/about/"
                 }
             ],
-            "description": "WordPress is web software you can use to create a beautiful website or blog.",
+            "description": "WordPress is open source software you can use to create a beautiful website, blog, or app.",
             "homepage": "http://wordpress.org/",
             "keywords": [
                 "blog",
                 "cms",
                 "wordpress"
             ],
-            "time": "2019-01-09T18:42:15+00:00"
+            "time": "2019-05-21T18:27:33+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
@@ -301,9 +301,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/all-in-one-redirection.2.1.0.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/all-in-one-redirection.2.1.0.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -321,9 +319,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/aryo-activity-log.2.5.2.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/aryo-activity-log.2.5.2.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -341,9 +337,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/ga-google-analytics.20180828.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/ga-google-analytics.20180828.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -353,17 +347,15 @@
         },
         {
             "name": "wpackagist-plugin/header-and-footer-scripts-inserter",
-            "version": "4.34",
+            "version": "4.40",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/header-and-footer-scripts-inserter/",
-                "reference": "tags/4.34"
+                "reference": "tags/4.40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/header-and-footer-scripts-inserter.4.34.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/header-and-footer-scripts-inserter.4.40.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -373,17 +365,15 @@
         },
         {
             "name": "wpackagist-plugin/meta-box",
-            "version": "4.16.3",
+            "version": "4.18.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/meta-box/",
-                "reference": "tags/4.16.3"
+                "reference": "tags/4.18.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/meta-box.4.16.3.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/meta-box.4.18.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -401,9 +391,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/reusable-gutenberg-blocks-widget.zip?timestamp=1519091826",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/reusable-gutenberg-blocks-widget.zip?timestamp=1519091826"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -421,9 +409,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/simple-page-sidebars.1.2.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/simple-page-sidebars.1.2.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -433,17 +419,15 @@
         },
         {
             "name": "wpackagist-plugin/updraftplus",
-            "version": "1.16.5",
+            "version": "1.16.14",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/updraftplus/",
-                "reference": "tags/1.16.5"
+                "reference": "tags/1.16.14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/updraftplus.1.16.5.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/updraftplus.1.16.14.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -453,17 +437,15 @@
         },
         {
             "name": "wpackagist-plugin/wordpress-seo",
-            "version": "9.6",
+            "version": "9.7",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordpress-seo/",
-                "reference": "tags/9.6"
+                "reference": "tags/9.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.9.6.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.9.7.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -473,7 +455,7 @@
         },
         {
             "name": "wpackagist-plugin/worker",
-            "version": "4.6.3",
+            "version": "4.8.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/worker/",
@@ -481,9 +463,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/worker.zip?timestamp=1540471707",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/worker.zip?timestamp=1557836488"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -493,17 +473,15 @@
         },
         {
             "name": "wpackagist-plugin/wp-fastest-cache",
-            "version": "0.8.9.0",
+            "version": "0.8.9.4",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wp-fastest-cache/",
-                "reference": "tags/0.8.9.0"
+                "reference": "tags/0.8.9.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-fastest-cache.0.8.9.0.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/wp-fastest-cache.0.8.9.4.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -513,17 +491,15 @@
         },
         {
             "name": "wpackagist-plugin/wp-mail-smtp",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wp-mail-smtp/",
-                "reference": "tags/1.4.1"
+                "reference": "tags/1.4.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-mail-smtp.1.4.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/plugin/wp-mail-smtp.1.4.2.zip"
             },
             "require": {
                 "composer/installers": "~1.0"

@@ -53,7 +53,7 @@ jobs:
             sudo apt install -y mysql-client
             sudo apt-get install -y lftp
 
-      - run: echo 127.0.0.1 dev-ctoec.dev | sudo tee -a /etc/hosts
+      - run: echo 127.0.0.1 dev-ctoec.test | sudo tee -a /etc/hosts
 
       - run: 
           name: Install WP-CLI
