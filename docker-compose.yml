@@ -35,6 +35,7 @@ services:
       - 'wplocaldockerCache:/var/www/.wp-cli/cache'
       - '~/.ssh:/root/.ssh'
       - './config/php-fpm/wp-cli.local.yml:/var/www/.wp-cli/config.yml'
+      - './backup:/tmp/backup'
     depends_on:
       - memcached
       - elasticsearch
