@@ -8,7 +8,7 @@
     ```
 1. Setup the site
     ```
-    ./scripts/setup
     ./scripts/fetch-dev
+    ./scripts/setup
     ```
 1. The site should be running on [localhost:8080](http://localhost:8080)
