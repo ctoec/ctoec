@@ -1,0 +1,7 @@
+{
+  "name": "ctoec-test",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@percy/script": "^1.0.0"
+  }
+}
