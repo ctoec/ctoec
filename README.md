@@ -9,5 +9,6 @@
 1. Setup the site
     ```
     ./setup
+    ./fetch-dev
     ```
 1. The site should be running on [localhost:8080](http://localhost:8080)
