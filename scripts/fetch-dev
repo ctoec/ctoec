@@ -1,0 +1,11 @@
+#!/bin/bash
+
+rm -Rf wordpress/wp-content/themes/ctoec
+git clone git@github.com:matthewcrist/benjamin.git wordpress/wp-content/themes/ctoec
+
+rm -Rf wordpress/wp-content/plugins/forms-list
+git clone git@github.com:matthewcrist/gutenberg-form-block.git wordpress/wp-content/plugins/forms-list
+
+rm -Rf wordpress/wp-content/plugins/simple-alert
+git clone git@github.com:matthewcrist/gutenberg-alert-block.git wordpress/wp-content/plugins/simple-alert
+
