@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -ex
 
 rm -Rf wordpress/wp-content/themes/ctoec

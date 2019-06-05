@@ -7,8 +7,17 @@
     docker-compose up
     ```
 1. Setup the site
-    ```
-    ./scripts/fetch-dev
-    ./scripts/setup
+    ```bash
+    ./scripts/build-dev
     ```
 1. The site should be running on [localhost:8080](http://localhost:8080)
+
+## Starting and stopping site after initial setup
+1. Stop docker
+    ```bash
+    docker-compose down
+    ```
+1. Start docker
+    ```bash
+    docker-compose down
+    ```

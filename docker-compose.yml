@@ -15,13 +15,6 @@ services:
     environment:
       CERT_NAME: localhost
       HTTPS_METHOD: noredirect
-      VIRTUAL_HOST: 'ctoec.test,*.ctoec.test'
-  memcacheadmin:
-    image: hitwe/phpmemcachedadmin
-    expose:
-      - '80'
-    depends_on:
-      - memcached
   phpfpm:
     build: .
     volumes:
