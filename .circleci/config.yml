@@ -5,7 +5,7 @@ workflows:
       - build
       - deploy-prod:
           requires:
-            - build #alternately this could depend on deploy-dev to have a linear flow instead of split
+            - build
           filters:
             branches:
               only: prod
@@ -14,7 +14,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.1-node-browsers
+      - image: circleci/php:7.3
       - image: circleci/mariadb:10.3.4-ram
         environment:
           MARIADB_USER: root
@@ -25,63 +25,50 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "composer.json" }}
           - v1-dependencies-
 
-      - save_cache:
-          paths:
-            - ./vendor
-          key: v1-dependencies-{{ checksum "composer.json" }}
-
       - run:
-          name: install dockerize
-          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-          environment:
-            DOCKERIZE_VERSION: v0.3.0
-
-      - run:
-          name: Wait for db
-          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
-
-      - run: 
           name: Update dependencies
           command: |
             sudo apt-get update -q
             sudo apt install -y mysql-client
-            sudo apt-get install -y lftp
 
-      - run: echo 127.0.0.1 dev-ctoec.test | sudo tee -a /etc/hosts
-
-      - run: 
-          name: Install WP-CLI
-          command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-      
       - run:
           name: Creating database
-          command: mysql  -h 127.0.0.1 -u root -e "create database wordpress;"
+          command: |
+
+            function dbIsDown { mysqladmin -h 127.0.0.1 -u root status  > /dev/null 2>&1 && echo "$?"; }
+
+            while [ -z $(dbIsDown)  ]; do
+                echo "waiting for mysql to start working"
+                sleep 3s
+            done
+
+            mysql -h 127.0.0.1 -u root -e "create database wordpress;"
 
       - run: 
-          name: Setting WP-CLI permissions
-          command: chmod +x wp-cli.phar
-
-      - run:
-          name: Downloading WP core
-          command: ./wp-cli.phar core download --path=wordpress
+          name: Install WP-CLI and WP Core
+          command: | 
+            set -x
+            curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+            chmod +x wp-cli.phar
+            ./wp-cli.phar core download --path=wordpress
 
       - run:
           name: Creating WP config file
           command: ./wp-cli.phar config create --allow-root --dbname=wordpress --dbuser=root --dbhost=127.0.0.1 --path=wordpress
       
-      - run: 
-          name: Updating composer
-          command: sudo composer self-update
-
       - run:
           name: Installing WP themes and plugins via Composer
-          command: composer install -n --prefer-dist
+          command: sudo composer self-update && composer install -n --prefer-dist
+
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
 
       - persist_to_workspace:
           root: .
@@ -90,14 +77,15 @@ jobs:
 
   publish-prod:
     docker:
-      - image: circleci/php:7.1-node-browsers
-      - image: circleci/mariadb:10.3.4-ram
-        environment:
-          MARIADB_USER: root
-          MARIADB_DB: wordpress
+      - image: circleci/php:7.3
     steps:
       - attach_workspace:
           at: .
+      - run:
+          name: Update dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y lftp
       - run:
           name: Publish to Prod
           command: |
