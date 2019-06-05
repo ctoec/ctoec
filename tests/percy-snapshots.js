@@ -5,6 +5,6 @@ PercyScript.run(async (page, percySnapshot) => {
   await percySnapshot('homepage');
 
   await page.goto('https://beta.ctoec.org/learn-more/');
-  await percySnapshot('learn-more');
+  await percySnapshot('learn-more-test');
   
 });
