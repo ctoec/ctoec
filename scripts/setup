@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -ex
 
 # Clean before reset
@@ -12,6 +12,3 @@ docker-compose exec phpfpm bash -c " echo \"CREATE USER 'wordpress'@'%' IDENTIFI
 docker-compose exec phpfpm bash -c "echo \" GRANT ALL PRIVILEGES ON  ctoec.* TO 'wordpress'@'%'; \" | mysql -h mysql -u root -ppassword"
 docker run -it -u $(id -u):$(id -g) -v $(pwd):/wordpress 10up/phpfpm:7.3 bash -c "cd /wordpress && composer install"
 docker-compose exec -u $(id -u):$(id -g) phpfpm bash -c 'wp config create --dbname=ctoec --dbuser=wordpress --dbhost=mysql --dbpass=password'
-docker-compose exec phpfpm bash -c 'mysql -h mysql -u root -ppassword ctoec < /tmp/backup/backup.sql'
-docker-compose exec phpfpm bash -c " echo \"USE ctoec; UPDATE wp_options SET option_value='http://localhost:8080' WHERE option_name ='home';\" | mysql -h mysql -u root -ppassword"
-docker-compose exec phpfpm bash -c " echo \"USE ctoec; UPDATE wp_options SET option_value='http://localhost:8080' WHERE option_name ='siteurl';\" | mysql -h mysql -u root -ppassword"
