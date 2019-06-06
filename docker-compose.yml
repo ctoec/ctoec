@@ -1,7 +1,5 @@
 version: '3'
 services:
-  memcached:
-    image: 'memcached:latest'
   nginx:
     image: 'nginx:latest'
     ports:
@@ -26,7 +24,6 @@ services:
       - './backup:/tmp/backup'
     depends_on:
       - mysql
-      - memcached
   mysql:
     image: mysql:5
     command: --sql_mode=""
