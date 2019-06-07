@@ -2,6 +2,11 @@
   "name": "ctoec-test",
   "version": "1.0.0",
   "devDependencies": {
-    "@percy/script": "^1.0.0"
+    "@percy/script": "^1.0.0",
+    "jest": "^24.8.0",
+    "jest-expect-message": "^1.0.2"
+  },
+  "scripts": {
+    "check-compliance": "jest"
   }
 }

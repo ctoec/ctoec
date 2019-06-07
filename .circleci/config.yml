@@ -90,6 +90,27 @@ jobs:
       - run: npx percy exec -- node ./tests/percy-snapshots.js
       - run: npx percy finalize -a
 
+  validate-compliance:
+    docker:
+      - image: node
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+
+      - run: |
+          echo "Checking Compliance"
+          npm run check-compliance
+
+
   deploy-production:
     docker:
       - image: circleci/php:7.3
@@ -111,9 +132,11 @@ workflows:
   main:
     jobs:
       - build
+      - validate-compliance
       - run-visual-tests:
           requires:
             - build
+            - validate-compliance
       - deploy-production:
           requires:
             - run-visual-tests
