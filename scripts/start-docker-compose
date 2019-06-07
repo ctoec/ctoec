@@ -3,7 +3,7 @@ set -ex
 
 docker-compose up -d
 
-function dbIsDown { docker-compose exec phpfpm bash -c 'mysqladmin -h mysql -u root -ppassword status  > /dev/null 2>&1' && echo "$?"; }
+dbIsDown() { docker-compose exec phpfpm bash -c 'mysqladmin -h mysql -u root -ppassword status  > /dev/null 2>&1' && echo "$?"; }
 
 while [ -z $(dbIsDown)  ]; do
     echo "waiting for mysql to start working"
