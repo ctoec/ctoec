@@ -95,17 +95,14 @@ jobs:
       - image: node
     steps:
       - checkout
-
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
       - run: npm install
-
       - save_cache:
           paths:
             - ./node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
-
       - run: |
           echo "Checking Compliance"
           npm run check-compliance
