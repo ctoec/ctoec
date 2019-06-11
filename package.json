@@ -4,7 +4,9 @@
   "devDependencies": {
     "@percy/script": "^1.0.0",
     "jest": "^24.8.0",
-    "jest-expect-message": "^1.0.2"
+    "jest-expect-message": "^1.0.2",
+    "moment": "^2.24.0",
+    "nodegit": "^0.24.3"
   },
   "scripts": {
     "check-compliance": "jest"
