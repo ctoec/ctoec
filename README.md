@@ -27,3 +27,5 @@ This repository houses the Connecticut Office of Early Childhood's website. This
     ```bash
     docker-compose down
     ```
+
+## [Emergency Operation Plan](EMERGENCY_OPERATION_PLAN.md)
