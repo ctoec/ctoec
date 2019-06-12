@@ -4,7 +4,7 @@ const moment = require('moment')
 
 describe('Emergency Operation Plan', () => {
     test('has been reviewed recently', async () => {
-        const pathToEmergencyPlan = path.resolve('EMERGENCY_OPERATION_PLAN.md')
+        const pathToEmergencyPlan = path.resolve('./security-compliance/EMERGENCY_OPERATION_PLAN.md')
         const regex = /Last Reviewed: (\d{4}-\d{1,2}-\d{1,2})/ig;
         const fileText = getFileText(pathToEmergencyPlan)
         const dateMatch = regex.exec(fileText);
@@ -22,10 +22,4 @@ function getFileText(pathToEmergencyPlan) {
     } catch (err) {
         console.error(err)
     }
-}
-
-function getTodayLastYear() {
-    const lastYear = new Date();
-    lastYear.setFullYear(lastYear.getFullYear() - 1);
-    return lastYear
 }
