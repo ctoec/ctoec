@@ -3,5 +3,5 @@ set -ex
 
 ./scripts/fetch-dev-plugins
 ./scripts/start-docker-compose
-./scripts/setup
+./scripts/setup-wp
 ./scripts/load-dev-data
