@@ -102,6 +102,7 @@ jobs:
       - run:
           name: Publish to Staging
           command: |
+            if [ -z ${CIRCLE_PULL_REQUEST+x} ]; then exit 0; else echo "Run on PRs"; fi
             lftp sftp://${STAGING_SFTP_USERNAME}:${STAGING_SFTP_PASSWORD}@${STAGING_SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${STAGING_SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"
 
   run-visual-tests:
@@ -127,8 +128,12 @@ jobs:
           paths:
             - ./node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
-      - run: npx percy exec -- node ./tests/percy-snapshots.js
-      - run: npx percy finalize -a
+      - run:
+          name: Run Percy
+          command: |
+            if [ -z ${CIRCLE_PULL_REQUEST+x} ]; then exit 0; else echo "Run on PRs"; fi
+            npx percy exec -- node ./tests/percy-snapshots.js
+            npx percy finalize -a
 
   deploy-production:
     docker:
