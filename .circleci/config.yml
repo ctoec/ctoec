@@ -4,6 +4,24 @@ orbs:
   percy: percy/agent@0.1.2
 
 jobs:
+
+  validate-compliance:
+    docker:
+      - image: node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+      - run: npm install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+      - run: |
+          echo "Checking Compliance"
+          npm run check-compliance
+
   build:
     docker:
       - image: circleci/php:7.3
@@ -27,7 +45,7 @@ jobs:
             sudo apt install -y mysql-client
 
       - run:
-          name: Creating database
+          name: Create database
           command: |
             function dbIsDown { mysqladmin -h 127.0.0.1 -u root status  > /dev/null 2>&1 && echo "$?"; }
 
@@ -47,6 +65,12 @@ jobs:
             ./wp-cli.phar core download --path=wordpress
 
       - run:
+          name: Download theme
+          command: |
+            git clone -b master --single-branch https://github.com/matthewcrist/benjamin.git wordpress/wp-content/themes/ctoec
+            rm -rf wordpress/wp-content/themes/ctoec/.git
+
+      - run:
           name: Creating WP config file
           command: ./wp-cli.phar config create --allow-root --dbname=wordpress --dbuser=root --dbhost=127.0.0.1 --path=wordpress
 
@@ -63,6 +87,23 @@ jobs:
           root: .
           paths:
             - wordpress
+
+  deploy-staging:
+    docker:
+      - image: circleci/php:7.3
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Update dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y lftp
+      - run:
+          name: Publish to Staging
+          command: |
+            if [ -z ${CIRCLE_PULL_REQUEST+x} ]; then exit 0; else echo "Run on PRs"; fi
+            lftp sftp://${STAGING_SFTP_USERNAME}:${STAGING_SFTP_PASSWORD}@${STAGING_SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${STAGING_SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"
 
   run-visual-tests:
     docker:
@@ -87,26 +128,12 @@ jobs:
           paths:
             - ./node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
-      - run: npx percy exec -- node ./tests/percy-snapshots.js
-      - run: npx percy finalize -a
-
-  validate-compliance:
-    docker:
-      - image: node
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
-      - run: npm install
-      - save_cache:
-          paths:
-            - ./node_modules
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
-      - run: |
-          echo "Checking Compliance"
-          npm run check-compliance
-
+      - run:
+          name: Run Percy
+          command: |
+            if [ -z ${CIRCLE_PULL_REQUEST+x} ]; then exit 0; else echo "Run on PRs"; fi
+            npx percy exec -- node ./tests/percy-snapshots.js
+            npx percy finalize -a
 
   deploy-production:
     docker:
@@ -128,12 +155,15 @@ workflows:
   version: 2
   main:
     jobs:
-      - build
       - validate-compliance
-      - run-visual-tests:
+      - build
+      - deploy-staging:
           requires:
             - build
             - validate-compliance
+      - run-visual-tests:
+          requires:
+            - deploy-staging
       - deploy-production:
           requires:
             - run-visual-tests

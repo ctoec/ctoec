@@ -1,6 +1,0 @@
-#!/bin/sh
-set -ex
-
-./scripts/start-docker-compose
-./scripts/setup
-docker-compose down
