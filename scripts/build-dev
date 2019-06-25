@@ -5,3 +5,4 @@ set -ex
 ./scripts/start-docker-compose
 ./scripts/setup
 ./scripts/load-dev-data
+./scripts/kill-cache
