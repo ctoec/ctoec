@@ -67,7 +67,7 @@ jobs:
       - run:
           name: Download theme
           command: |
-            git clone -b master --single-branch https://github.com/matthewcrist/benjamin.git wordpress/wp-content/themes/ctoec
+            git clone -b master --single-branch https://github.com/ctoec/benjamin.git wordpress/wp-content/themes/ctoec
             rm -rf wordpress/wp-content/themes/ctoec/.git
 
       - run:
