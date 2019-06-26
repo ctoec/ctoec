@@ -2,3 +2,4 @@ backup/
 node_modules
 vendor
 wordpress
+*report.html

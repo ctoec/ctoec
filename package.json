@@ -5,6 +5,8 @@
     "@percy/script": "^1.0.0",
     "jest": "^24.8.0",
     "jest-expect-message": "^1.0.2",
+    "lighthouse": "^5.1.0",
+    "lighthouse-ci": "^1.9.0",
     "moment": "^2.24.0"
   },
   "scripts": {
