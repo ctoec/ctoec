@@ -103,9 +103,12 @@ jobs:
           name: Publish to Staging
           command: |
             # if [ -z ${CIRCLE_PULL_REQUEST+x} ]; then exit 0; else echo "Run on PRs"; fi
-            cd wordpress && git log && git status && cd ..
-            rm -rf wordpress/wp-content/themes/ctoec/.git
-            lftp sftp://${STAGING_SFTP_USERNAME}:${STAGING_SFTP_PASSWORD}@${STAGING_SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${STAGING_SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"
+            set -ex
+            cd wordpress 
+            git log
+            git status
+            cd ..
+            # lftp sftp://${STAGING_SFTP_USERNAME}:${STAGING_SFTP_PASSWORD}@${STAGING_SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${STAGING_SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"
 
   check-accessibility-lighthouse:
     docker:
