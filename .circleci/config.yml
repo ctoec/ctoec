@@ -87,7 +87,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - wordpress
+            - wordpress/*
 
   deploy-staging:
     docker:
@@ -105,6 +105,29 @@ jobs:
           command: |
             if [ -z ${CIRCLE_PULL_REQUEST+x} ]; then exit 0; else echo "Run on PRs"; fi
             lftp sftp://${STAGING_SFTP_USERNAME}:${STAGING_SFTP_PASSWORD}@${STAGING_SFTP_HOSTNAME} -e "set ssl: verify-certificate no; set sftp:auto-confirm yes; mirror --exclude _dev/ -v -R ./wordpress/wp-content/themes/${THEME_NAME} ${STAGING_SITE_PATH}/wp-content/themes/${THEME_NAME}; quit"
+
+  check-accessibility-lighthouse:
+    docker:
+      - image: node:alpine
+    environment:
+      PERCY_PARALLEL_TOTAL: "-1"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+      - run: |
+           apk add chromium
+      - run: npm install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Run Lighthouse
+          command: |
+            if [ -z ${CIRCLE_PULL_REQUEST+x} ]; then exit 0; else echo "Run on PRs"; fi
+            npx lighthouse-ci http://stage.ctoec.org --quiet --chrome-flags="--headless" --accessibility=100
 
   run-visual-tests:
     docker:
@@ -165,6 +188,9 @@ workflows:
       - run-visual-tests:
           requires:
             - deploy-staging
+      -  check-accessibility-lighthouse:
+           requires:
+            - deploy-staging     
       - deploy-production:
           requires:
             - run-visual-tests
