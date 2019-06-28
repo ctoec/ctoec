@@ -68,6 +68,7 @@ jobs:
           name: Download theme
           command: |
             if [[ $CIRCLE_BRANCH = "master" ]]; then DEPLOY_BRANCH=master; else DEPLOY_BRANCH=dev; fi
+            rm -Rf wordpress/wp-content/themes/ctoec
             git clone -b ${DEPLOY_BRANCH} --single-branch https://github.com/ctoec/benjamin.git wordpress/wp-content/themes/ctoec
             rm -rf wordpress/wp-content/themes/ctoec/.git
 
