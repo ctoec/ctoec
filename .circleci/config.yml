@@ -87,7 +87,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - wordpress
+            - wordpress/*
 
   deploy-staging:
     docker:
