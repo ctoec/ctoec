@@ -65,13 +65,6 @@ jobs:
             ./wp-cli.phar core download --path=wordpress
 
       - run:
-          name: Download theme
-          command: |
-            if [[ $CIRCLE_BRANCH = "master" ]]; then DEPLOY_BRANCH=master; else DEPLOY_BRANCH=dev; fi
-            git clone -b ${DEPLOY_BRANCH} --single-branch https://github.com/ctoec/benjamin.git wordpress/wp-content/themes/ctoec
-            rm -rf wordpress/wp-content/themes/ctoec/.git
-
-      - run:
           name: Creating WP config file
           command: ./wp-cli.phar config create --allow-root --dbname=wordpress --dbuser=root --dbhost=127.0.0.1 --path=wordpress
 
@@ -101,10 +94,10 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y lftp
       - run:
-          name: Download a fresh dev theme copy
+          name: Change theme to dev
           command: |
-            rm -Rf wordpress/wp-content/themes/ctoec
-            git clone -b dev --single-branch https://github.com/ctoec/benjamin.git wordpress/wp-content/themes/ctoec
+            cd wordpress/wp-content/themes/ctoec
+            git checkout dev
             rm -rf wordpress/wp-content/themes/ctoec/.git
       - run:
           name: Publish to Staging

@@ -21,7 +21,7 @@
             "version": "dev-master",
             "type":"wordpress-theme",
             "source": {
-                "url": "https://github.com/matthewcrist/benjamin.git",
+                "url": "https://github.com/ctoec/benjamin.git",
                 "type": "git",
                 "reference": "master"
             }
@@ -34,7 +34,7 @@
             "version": "dev-master",
             "type":"wordpress-plugin",
             "source": {
-                "url": "https://github.com/matthewcrist/gutenberg-form-block.git",
+                "url": "https://github.com/ctoec/gutenberg-form-block.git",
                 "type": "git",
                 "reference": "master"
             }
