@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/ctoec/ctoec.svg?style=svg)](https://circleci.com/gh/ctoec/ctoec)
+[![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/skylight/ctoec-website)
 
 # Connecticut Office of Early Childhood's website
 
