@@ -2,7 +2,7 @@
 [![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/skylight/ctoec-website)
 
 # Connecticut Office of Early Childhood's website
-
+[stage.ctoec.org](http://stage.ctoec.org/learn-more/)
 [beta.ctoec.org](https://beta.ctoec.org/learn-more/)
 
 This repository houses the Connecticut Office of Early Childhood's website. This site uses a modified version of the [Benjamin WP theme](https://github.com/matthewcrist/benjamin) for the front end interface.
