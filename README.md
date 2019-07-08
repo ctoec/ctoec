@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/ctoec/ctoec.svg?style=svg)](https://circleci.com/gh/ctoec/ctoec)
+
 # Connecticut Office of Early Childhood's website
 
 [beta.ctoec.org](https://beta.ctoec.org/learn-more/)
