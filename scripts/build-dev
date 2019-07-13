@@ -1,0 +1,8 @@
+#!/bin/sh
+set -ex
+
+./scripts/fetch-dev-plugins
+./scripts/start-docker-compose
+./scripts/setup-wp
+./scripts/load-dev-data
+./scripts/kill-cache

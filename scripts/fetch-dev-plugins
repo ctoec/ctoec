@@ -1,0 +1,11 @@
+#!/bin/sh
+set -ex
+
+rm -Rf wordpress/wp-content/themes/ctoec
+git clone -b dev --single-branch https://github.com/ctoec/benjamin.git wordpress/wp-content/themes/ctoec
+
+rm -Rf wordpress/wp-content/plugins/forms-list
+git clone -b master --single-branch https://github.com/ctoec/gutenberg-form-block.git wordpress/wp-content/plugins/forms-list
+
+rm -Rf wordpress/wp-content/plugins/simple-alert
+git clone -b master --single-branch https://github.com/ctoec/gutenburg-alert-block.git wordpress/wp-content/plugins/simple-alert

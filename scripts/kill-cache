@@ -1,0 +1,5 @@
+#!/bin/sh
+set -ex
+
+docker-compose exec -u $(id -u):$(id -g) phpfpm bash -c 'wp plugin deactivate wp-fastest-cache'
+docker-compose exec -u $(id -u):$(id -g) phpfpm bash -c 'wp plugin delete wp-fastest-cache'

@@ -1,2 +1,5 @@
-wordpress
+backup/
+node_modules
 vendor
+*report.html
+wordpress
