@@ -78,14 +78,10 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: 
-          name: Update dependencies
-          command: |
-            sudo apt-get install -y lftp
       - run:
           name: Update dependencies
           command: |
-            sudo apt-get update
+            sudo apt-get update -q
             sudo apt-get install -y lftp
       - run:
           name: Change theme to dev
@@ -160,7 +156,7 @@ jobs:
       - run:
           name: Update dependencies
           command: |
-            sudo apt-get update
+            sudo apt-get update -q
             sudo apt-get install -y lftp
       - run:
           name: Publish to Prod
