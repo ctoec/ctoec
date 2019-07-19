@@ -34,10 +34,10 @@ jobs:
       - checkout
 
       - run:
-          name: Update dependencies
+          name: Fetch dependencies
           command: |
             sudo apt-get update -q
-            sudo apt install -y mysql-client
+            sudo apt install -y mariadb-client
 
       - run:
           name: Create database
@@ -165,7 +165,7 @@ jobs:
 
 workflows:
   version: 2
-  main:
+  commit:
     jobs:
       - validate-compliance
       - build
@@ -185,3 +185,13 @@ workflows:
           filters:
             branches:
               only: prod
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 12 * * *"
+          filters:
+            branches:
+              only:
+                - dev
+    jobs:
+      - validate-compliance
