@@ -11,7 +11,7 @@ describe('System logs', () => {
         const lastReviewDate = new Date(dateMatch[1])
         const threeMonthsAgo = moment().subtract(3, 'months');
 
-        expect(lastReviewDate > threeMonthsAgo, `System logs have not been reviewed for over 3 months`).toBe(true)
+        expect(lastReviewDate > threeMonthsAgo, `System logs have not been reviewed for over 3 months see SYSTEM_LOGGING.md`).toBe(true)
 
     })
 })

@@ -11,7 +11,7 @@ describe('Emergency Operation Plan', () => {
         const emergencyPlanReviewDate = new Date(dateMatch[1])
         const threeMonthsAgo = moment().subtract(3, 'months');
 
-        expect(emergencyPlanReviewDate > threeMonthsAgo, `Plan has not been reviewed for over 3 months`).toBe(true)
+        expect(emergencyPlanReviewDate > threeMonthsAgo, `Plan has not been reviewed for over 3 months see EMERGENCY_OPERATION_PLAN.md`).toBe(true)
 
     })
 })
