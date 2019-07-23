@@ -82,7 +82,7 @@ jobs:
 
   check-accessibility-lighthouse:
     docker:
-      - image: stateofct/ctoec-node:alpine
+      - image: node:alpine
     environment:
       PERCY_PARALLEL_TOTAL: "-1"
     steps:
