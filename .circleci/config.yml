@@ -7,24 +7,24 @@ jobs:
 
   validate-compliance:
     docker:
-      - image: node
+      - image: stateofct/ctoec-node
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v2-dependencies-{{ checksum "package-lock.json" }}
       - run: npm install
       - save_cache:
           paths:
             - ./node_modules
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          key: v2-dependencies-{{ checksum "package-lock.json" }}
       - run: |
           echo "Checking Compliance"
           npm run check-compliance
 
   build:
     docker:
-      - image: circleci/php:7.3
+      - image: stateofct/ctoec-php
       - image: circleci/mariadb:10.3.4-ram
         environment:
           MARIADB_USER: root
@@ -32,13 +32,6 @@ jobs:
 
     steps:
       - checkout
-
-      - run:
-          name: Fetch dependencies
-          command: |
-            sudo apt-get update -q
-            sudo apt install -y mariadb-client
-
       - run:
           name: Create database
           command: |
@@ -55,13 +48,11 @@ jobs:
           name: Install WP-CLI and WP Core
           command: |
             set -x
-            curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-            chmod +x wp-cli.phar
-            ./wp-cli.phar core download --path=wordpress
+            wp core download --path=wordpress
 
       - run:
           name: Creating WP config file
-          command: ./wp-cli.phar config create --allow-root --dbname=wordpress --dbuser=root --dbhost=127.0.0.1 --path=wordpress
+          command: wp config create --allow-root --dbname=wordpress --dbuser=root --dbhost=127.0.0.1 --path=wordpress
 
       - run:
           name: Installing WP themes and plugins via Composer
@@ -74,15 +65,10 @@ jobs:
 
   deploy-staging:
     docker:
-      - image: circleci/php:7.3
+      - image: stateofct/ctoec-php
     steps:
       - attach_workspace:
           at: .
-      - run:
-          name: Update dependencies
-          command: |
-            sudo apt-get update -q
-            sudo apt-get install -y lftp
       - run:
           name: Change theme to dev
           command: |
@@ -103,14 +89,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v2-dependencies-{{ checksum "package-lock.json" }}
       - run: |
            apk add chromium
       - run: npm install
       - save_cache:
           paths:
             - ./node_modules
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          key: v2-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Run Lighthouse
           command: |
@@ -119,27 +105,19 @@ jobs:
 
   run-visual-tests:
     docker:
-      - image: node
+      - image: stateofct/ctoec-node
     environment:
       PERCY_PARALLEL_TOTAL: "-1"
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
-      - run: |
-          apt-get update && \
-            apt-get -y install xvfb gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 \
-            libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 \
-            libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
-            libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 \
-            libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget && \
-            rm -rf /var/lib/apt/lists/*
+            - v2-dependencies-{{ checksum "package-lock.json" }}
       - run: npm install
       - save_cache:
           paths:
             - ./node_modules
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          key: v2-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Run Percy
           command: |
@@ -149,15 +127,10 @@ jobs:
 
   deploy-production:
     docker:
-      - image: circleci/php:7.3
+      - image: stateofct/ctoec-php
     steps:
       - attach_workspace:
           at: .
-      - run:
-          name: Update dependencies
-          command: |
-            sudo apt-get update -q
-            sudo apt-get install -y lftp
       - run:
           name: Publish to Prod
           command: |
