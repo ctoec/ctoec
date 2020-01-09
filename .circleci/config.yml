@@ -5,23 +5,6 @@ orbs:
 
 jobs:
 
-  validate-compliance:
-    docker:
-      - image: stateofct/ctoec-node
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v2-dependencies-{{ checksum "package-lock.json" }}
-      - run: npm install
-      - save_cache:
-          paths:
-            - ./node_modules
-          key: v2-dependencies-{{ checksum "package-lock.json" }}
-      - run: |
-          echo "Checking Compliance"
-          npm run check-compliance
-
   build:
     docker:
       - image: stateofct/ctoec-php
@@ -140,12 +123,10 @@ workflows:
   version: 2
   commit:
     jobs:
-      - validate-compliance
       - build
       - deploy-staging:
           requires:
             - build
-            - validate-compliance
       - run-visual-tests:
           requires:
             - deploy-staging
@@ -158,13 +139,3 @@ workflows:
           filters:
             branches:
               only: prod
-  nightly:
-    triggers:
-      - schedule:
-          cron: "0 12 * * *"
-          filters:
-            branches:
-              only:
-                - dev
-    jobs:
-      - validate-compliance
