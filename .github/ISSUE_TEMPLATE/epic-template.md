@@ -7,11 +7,11 @@ assignees: ''
 
 ---
 
-##Intro/Context
+## Intro/Context
 - Summary
 - Metrics
 - Documentation
 
-##User Stories 
+## User Stories 
 
-##Additional Links/resources
+## Additional Links/resources

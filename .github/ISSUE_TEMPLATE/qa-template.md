@@ -7,10 +7,10 @@ assignees: ''
 
 ---
 
-###Full checklist
+### Full checklist
 https://skylight.digital/work/toolkits/accessibility-guide/checklist/
 
-###Items to check on new/unique WP pages on CTOEC.org.
+### Items to check on new/unique WP pages on CTOEC.org.
 
 [ ] Site doesn't timeout unexpectedly
 [ ] Default language is set

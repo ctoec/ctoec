@@ -7,11 +7,11 @@ assignees: ''
 
 ---
 
-###User Story:
+### User Story:
 As a [user], I want to be able to [do thing] so that I can [achieve goal]. 
 
-###Product Requirements
+### Product Requirements
 
-###Design Requirements
+### Design Requirements
 
-###Acceptance Criteria
+### Acceptance Criteria
