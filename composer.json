@@ -23,7 +23,7 @@
             "source": {
                 "url": "https://github.com/ctoec/benjamin.git",
                 "type": "git",
-                "reference": "master"
+                "reference": "dev"
             }
         }
       },

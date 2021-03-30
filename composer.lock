@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bc4b51f7a86169e118f36441367cc1ef",
+    "content-hash": "c0ed3082d137fb1a2ae0f164431e0b21",
     "packages": [
         {
             "name": "composer/installers",
@@ -278,7 +278,7 @@
                 "reference": "master"
             },
             "type": "wordpress-plugin",
-            "time": "2019-02-07T16:07:53+00:00"
+            "time": "2019-06-28T18:07:10+00:00"
         },
         {
             "name": "theme/ctoec",
@@ -286,10 +286,10 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ctoec/benjamin.git",
-                "reference": "master"
+                "reference": "dev"
             },
             "type": "wordpress-theme",
-            "time": "2019-02-11T01:24:14+00:00"
+            "time": "2021-02-11T13:23:47+00:00"
         },
         {
             "name": "wpackagist-plugin/all-in-one-redirection",
@@ -518,5 +518,6 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
